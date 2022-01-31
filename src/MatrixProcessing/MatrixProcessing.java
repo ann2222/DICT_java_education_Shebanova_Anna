@@ -11,10 +11,12 @@ public class MatrixProcessing {
             String command = scanner.next();
             checkCommand(command);
         }
+
     }
 
     private static void printMenu() {
         System.out.println("1. Add matrices");
+        System.out.println("2. Multiply matrix by a constant");
         System.out.println("0. Exit");
 
     }
@@ -37,12 +39,26 @@ public class MatrixProcessing {
                 System.out.println("The result is: ");
                 printMatrix(addition(matrixNumberOne, matrixNumberTwo));
             }
-        }
-        if (command.equals("0")) {
-            on = false;
+
+        } else if (command.equals("2")) {
+            System.out.print("Enter size of matrix: ");
+            int row = Integer.parseInt(scanner.next());
+            int col = Integer.parseInt(scanner.next());
+            System.out.println("Enter matrix: ");
+            double[][] matrix = readMatrix(row, col);
+
+            System.out.print("Enter constant: ");
+            double constant = Double.parseDouble(scanner.next());
+
+            System.out.println("The result is: ");
+            printMatrix(multiplicationByConstant(matrix, constant));
+
+        }else if (command.equals("0")) {
+            System.exit(0);
+
         }
     }
-    private static boolean checkSameSize(int rowOne, int colOne, int rowTwo, int colTwo) {
+    private static boolean checkSameSize ( int rowOne, int colOne, int rowTwo, int colTwo){
         if (rowOne != rowTwo || colOne != colTwo) {
             System.out.println("The operation cannot be performed.");
             return false;
@@ -50,7 +66,7 @@ public class MatrixProcessing {
         return true;
     }
 
-    private static double[][] readMatrix(int row, int col) {
+    private static double[][] readMatrix ( int row, int col){
         double[][] matrix = new double[row][col];
 
         for (int i = 0; i < row; i++) {
@@ -61,7 +77,7 @@ public class MatrixProcessing {
         return matrix;
     }
 
-    private static void printMatrix(double[][] matrix) {
+    private static void printMatrix ( double[][] matrix){
         int row = matrix.length;
         int col = matrix[0].length;
 
@@ -86,5 +102,22 @@ public class MatrixProcessing {
         }
         return result;
     }
+    private static double[][] multiplicationByConstant(double[][] matrix, double constant) {
+        int row = matrix.length;
+        int col = matrix[0].length;
+
+
+        double[][] result = new double[row][col];
+
+
+        for (int i = 0; i < row; i++) {
+            for (int ii = 0; ii < col; ii++) {
+                result[i][ii] = matrix[i][ii] * constant;
+            }
+        }
+        return result;
+    }
 
 }
+
+

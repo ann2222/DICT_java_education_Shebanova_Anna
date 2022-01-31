@@ -17,6 +17,7 @@ public class MatrixProcessing {
     private static void printMenu() {
         System.out.println("1. Add matrices");
         System.out.println("2. Multiply matrix by a constant");
+        System.out.println("3. Multiply matrices");
         System.out.println("0. Exit");
 
     }
@@ -56,6 +57,21 @@ public class MatrixProcessing {
         }else if (command.equals("0")) {
             System.exit(0);
 
+        }else if (command.equals("3")) {
+            System.out.print("Enter size of first matrix: ");
+            int rowOne = Integer.parseInt(scanner.next());
+            int colOne = Integer.parseInt(scanner.next());
+            System.out.println("Enter first matrix: ");
+            double[][] matrixNumberOne = readMatrix(rowOne, colOne);
+
+            System.out.print("Enter size of second matrix: ");
+            int rowTwo = Integer.parseInt(scanner.next());
+            int colTwo = Integer.parseInt(scanner.next());
+            System.out.println("Enter second matrix: ");
+
+            double[][] matrixNumberTwo = readMatrix(rowTwo, colTwo);
+            System.out.println("The result is: ");
+            printMatrix(multiplicationByMatrix(matrixNumberOne, matrixNumberTwo));
         }
     }
     private static boolean checkSameSize ( int rowOne, int colOne, int rowTwo, int colTwo){
@@ -114,6 +130,29 @@ public class MatrixProcessing {
             for (int ii = 0; ii < col; ii++) {
                 result[i][ii] = matrix[i][ii] * constant;
             }
+        }
+        return result;
+    }
+    private static double[][] multiplicationByMatrix(double[][] matrixOne, double[][] matrixTwo) {
+        int rowOne = matrixOne.length;
+        int colTwo = matrixTwo[0].length;
+        int colOne = matrixOne[0].length;
+
+        double[][] result = new double[rowOne][colTwo];
+
+        int indexOne = 0;
+
+        for (int i = 0; i < rowOne; i++) {
+            int indexTwo = 0;
+
+            for (int ii = 0; ii < colTwo; ii++) {
+
+                for (int j = 0; j < colOne; j++) {
+                    result[i][ii] += matrixOne[indexOne][j] * matrixTwo[j][indexTwo];
+                }
+                indexTwo++;
+            }
+            indexOne++;
         }
         return result;
     }

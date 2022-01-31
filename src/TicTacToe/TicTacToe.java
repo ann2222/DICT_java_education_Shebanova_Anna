@@ -3,7 +3,6 @@ import java.util.Scanner;
 
 
 public class TicTacToe {
-
     Scanner userInput = new Scanner(System.in);
     String line1 = "___";
     String line2 = "___";
@@ -12,10 +11,16 @@ public class TicTacToe {
 
     public static void main(String[] args) {
         TicTacToe myGame = new TicTacToe();
-        myGame.setField();
         myGame.showField();
-        myGame.makeMove();
-        myGame.showField();
+        while (true) {
+            myGame.makeMove();
+            myGame.showField();
+            String gameStatus = myGame.checkGameStatus();
+            if (!gameStatus.equals("Game unfinished")) {
+                System.out.println(gameStatus);
+                break;
+            }
+        }
     }
 
     public int countMatches(String target) {
@@ -25,7 +30,6 @@ public class TicTacToe {
         return (line1.length () + line2.length() + line3.length()) - (deleteTarget1.length () + deleteTarget2.length()
                 + deleteTarget3.length());
     }
-
     public String checkGameStatus() {
         boolean xWin = false;
         boolean oWin = false;
@@ -59,13 +63,10 @@ public class TicTacToe {
         } else {
             return "Draw";
         }
-
     }
-
     public void makeMove() {
         System.out.println("Enter coordinates");
         String coordinates = userInput.nextLine();
-
         if (moveChecker(coordinates)) {
             if (coordinates.charAt(0) == '1') {
                 line1 = replaceStringChar(line1, moveNow, Character.getNumericValue(coordinates.charAt(2)) - 1);
@@ -75,12 +76,16 @@ public class TicTacToe {
                 line3 = replaceStringChar(line3, moveNow, Character.getNumericValue(coordinates.charAt(2)) - 1);
             }
         }
+        if (moveNow == 'X'){
+            moveNow = 'O';
+        } else {
+            moveNow = 'X';
+        }
     }
 
     public String replaceStringChar(String string, char character, int index) {
         return string.substring(0, index) + character + string.substring(index+1);
     }
-
     public boolean moveChecker (String coordinates) {
         if (coordinates.length() != 3) {
             System.out.println("You should enter two numbers separated by space!");
@@ -117,21 +122,11 @@ public class TicTacToe {
             return false;
         }
     }
-
-    public void setField() {
-        System.out.println("Enter cells:");
-        String newField = userInput.nextLine();
-        line1 = newField.substring(0,3);
-        line2 = newField.substring(3, 6);
-        line3 = newField.substring(6, 9);
-    }
-
     public void showField() {
         System.out.printf("---------\n" +
                 "| %s |\n" +
                 "| %s |\n" +
-                "| %s |\n" + "---------\n", line1, line2, line3);
+                "| %s |\n" +
+                "---------\n", line1, line2, line3);
     }
 }
-
-

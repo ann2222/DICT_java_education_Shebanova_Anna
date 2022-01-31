@@ -18,6 +18,7 @@ public class MatrixProcessing {
         System.out.println("1. Add matrices");
         System.out.println("2. Multiply matrix by a constant");
         System.out.println("3. Multiply matrices");
+        System.out.println("4. Transpose matrix");
         System.out.println("0. Exit");
 
     }
@@ -72,7 +73,10 @@ public class MatrixProcessing {
             double[][] matrixNumberTwo = readMatrix(rowTwo, colTwo);
             System.out.println("The result is: ");
             printMatrix(multiplicationByMatrix(matrixNumberOne, matrixNumberTwo));
+        }else if (command.equals("4")) {
+            printTransposeMenu();
         }
+
     }
     private static boolean checkSameSize ( int rowOne, int colOne, int rowTwo, int colTwo){
         if (rowOne != rowTwo || colOne != colTwo) {
@@ -153,6 +157,103 @@ public class MatrixProcessing {
                 indexTwo++;
             }
             indexOne++;
+        }
+        return result;
+    }
+    private static void printTransposeMenu() {
+        System.out.println();
+        System.out.println("1. Main diagonal");
+        System.out.println("2. Side diagonal");
+        System.out.println("3. Vertical line");
+        System.out.println("4. Horizontal line");
+        System.out.print("Your choice: ");
+
+        String command = scanner.next();
+
+        System.out.print("Enter matrix size: ");
+        int row = Integer.parseInt(scanner.next());
+        int col = Integer.parseInt(scanner.next());
+        System.out.println("Enter matrix: ");
+        double[][] matrix = readMatrix(row, col);
+
+        if (command.equals("1")) {
+            System.out.println("The result is: ");
+            printMatrix(transposeMainDiagonal(matrix));
+
+        } else if (command.equals("2")) {
+            System.out.println("The result is: ");
+            printMatrix(transposeSideDiagonal(matrix));
+
+        } else if (command.equals("3")) {
+            System.out.println("The result is: ");
+            printMatrix(transposeVerticalLine(matrix));
+
+        } else if (command.equals("4")) {
+            System.out.println("The result is: ");
+            printMatrix(transposeHorizontalLine(matrix));
+
+        }
+
+    }
+
+
+    private static double[][] transposeMainDiagonal(double[][] matrix) {
+        int row = matrix[0].length;
+        int col = matrix.length;
+
+        double[][] result = new double[row][col];
+
+        for (int i  = 0; i < row; i++) {
+            for (int ii = 0; ii < col; ii++) {
+                result[i][ii] = matrix[ii][i];
+            }
+        }
+
+
+        return result;
+    }
+
+    private static double[][] transposeSideDiagonal(double[][] matrix) {
+        int row = matrix[0].length;
+        int col = matrix.length;
+
+        double[][] result = new double[row][col];
+
+
+        for (int i  = 0; i < row; i++) {
+            for (int ii = 0; ii < col; ii++) {
+                result[i][ii] = matrix[row - 1 - ii][col - 1 - i];
+            }
+        }
+
+        return result;
+    }
+
+
+    private static double[][] transposeVerticalLine(double[][] matrix) {
+        int row = matrix[0].length;
+        int col = matrix.length;
+
+        double[][] result = new double[row][col];
+
+        for (int i  = 0; i < row; i++) {
+            for (int ii = 0; ii < col; ii++) {
+                result[i][ii] = matrix[i][col - 1 - ii];
+            }
+        }
+        return result;
+    }
+
+    private static double[][] transposeHorizontalLine(double[][] matrix) {
+        int row = matrix[0].length;
+        int col = matrix.length;
+
+        double[][] result = new double[row][col];
+
+        for (int i  = 0; i < row; i++) {
+            for (int ii = 0; ii < col; ii++) {
+                result[i][ii] = matrix[row - 1 - i][ii];
+            }
         }
         return result;
     }
